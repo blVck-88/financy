@@ -1,73 +1,204 @@
-# Welcome to your Lovable project
+# Loan Manager
 
-## Project info
+A professional loan management system for managing borrowers, loan applications, and loan repayments.
+Built with **React + Vite + TypeScript** on the frontend and **Supabase** (Postgres, Auth, RLS) on the backend.
 
-**URL**: https://lovable.dev/projects/3244cc17-1c63-4cbd-89cc-fd9005c4cb37
+---
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+### Dashboard
 
-**Use Lovable**
+* Total borrowers
+* Active loans
+* Total disbursed
+* Total collected
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3244cc17-1c63-4cbd-89cc-fd9005c4cb37) and start prompting.
+### Authentication
 
-Changes made via Lovable will be committed automatically to this repo.
+* Secure user sign-up/sign-in using Supabase Auth
 
-**Use your preferred IDE**
+### Borrowers
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+* Register borrowers
+* Searchable borrower list
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Loans
 
-Follow these steps:
+* Create loans (principal, rate, term, frequency)
+* Searchable loan list
+* Loan detail view with full repayment schedule
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Repayments
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+* Record repayments on active loans
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Role-Based Security
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+* Supabase RLS ensures actions match assigned user roles
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* React
+* Vite
+* TypeScript
+* Tailwind CSS
+* Shadcn/UI
+* React Router
+* TanStack Query
+
+### Backend
+
+* Supabase Postgres
+* Supabase Auth
+* Row Level Security (RLS)
+
+### Other Tools
+
+* Sonner (notifications)
+
+---
+
+## Local Setup
+
+### 1. Requirements
+
+* Node.js v18+
+* npm or bun
+* Supabase account
+
+### 2. Clone
+
+```bash
+git clone <YOUR_GIT_REPOSITORY_URL>
+cd financy-loan
+```
+
+### 3. Install
+
+```bash
+npm install
+```
+
+---
+
+## Supabase Configuration
+
+### Step 1: Create Supabase Project
+
+Make a new project in the Supabase dashboard.
+
+### Step 2: Retrieve API Keys
+
+In the dashboard:
+**Project Settings → API**
+Copy:
+
+* Project URL
+* anon key
+
+### Step 3: Apply Database Migration
+
+1. Open **SQL Editor**
+2. Open migration file:
+   `supabase/migrations/20251114071132_dd21dc72-db6b-4405-80d8-73a604af5e85.sql`
+3. Use the **corrected SQL** (not the original)
+4. Run it
+
+This sets up:
+
+* Tables
+* Functions
+* Roles
+* Triggers
+* RLS policies
+
+---
+
+## Environment Variables
+
+Create `.env` in the root:
+
+```env
+VITE_SUPABASE_URL=YOUR_PROJECT_URL
+VITE_SUPABASE_PUBLISHABLE_KEY=YOUR_ANON_KEY
+```
+
+---
+
+## Run Locally
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open the URL printed (default: `http://localhost:8080`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## User Roles and RLS
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Supabase RLS is enabled on all tables.
 
-## What technologies are used for this project?
+When a user signs up:
 
-This project is built with:
+* A row is added to `public.profiles`
+* No role is assigned automatically
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+A user cannot create borrowers/loans/repayments until assigned a role.
 
-## How can I deploy this project?
+### Assign a Role
 
-Simply open [Lovable](https://lovable.dev/projects/3244cc17-1c63-4cbd-89cc-fd9005c4cb37) and click on Share -> Publish.
+1. Log in to create the user
+2. In Table Editor, open `profiles` and copy the ID
+3. Open `user_roles` table
+4. Insert:
 
-## Can I connect a custom domain to my Lovable project?
+   * `user_id`: copied ID
+   * `role`: one of:
 
-Yes, you can!
+| Role           | Permission               |
+| -------------- | ------------------------ |
+| `admin`        | Full access              |
+| `loan_officer` | Create borrowers & loans |
+| `accountant`   | Record repayments        |
+| `collector`    | Record repayments        |
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Deployment
+
+### Lovable
+
+* Open the project
+* Share → Publish
+
+### Vercel / Netlify
+
+1. Push code to GitHub/GitLab
+2. Create a project
+3. Configuration:
+
+   * Build: `npm run build`
+   * Output: `dist`
+4. Add environment variables:
+
+   * `VITE_SUPABASE_URL`
+   * `VITE_SUPABASE_PUBLISHABLE_KEY`
+
+---
+
+## Summary
+
+This project provides:
+
+* A modern, secure loan management workflow
+* Full borrower → loan → repayment lifecycle
+* Strong role-based access via Supabase RLS
+* A clean development and deployment process
+
+---
