@@ -141,11 +141,19 @@ const Repayments = () => {
                     <SelectValue placeholder="Select loan" />
                   </SelectTrigger>
                   <SelectContent>
-                    {activeLoans?.map((loan: any) => (
-                      <SelectItem key={loan.id} value={loan.id}>
-                        {loan.borrowers?.full_name} - ${Number(loan.principal).toLocaleString()}
-                      </SelectItem>
-                    ))}
+                    {activeLoans && activeLoans.length > 0 ? (
+                      activeLoans.map((loan: any) => (
+                        <SelectItem key={loan.id} value={loan.id}>
+                          {loan.borrowers?.full_name} - ${Number(loan.principal).toLocaleString()}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <div className="px-2 py-6 text-center text-sm text-muted-foreground">
+                        No active or disbursed loans available.
+                        <br />
+                        Please disburse a loan first.
+                      </div>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
