@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import Borrowers from "./pages/Borrowers";
 import NewBorrower from "./pages/NewBorrower";
+import BorrowerDetail from "./pages/BorrowerDetail";
 import Loans from "./pages/Loans";
 import NewLoan from "./pages/NewLoan";
 import LoanDetail from "./pages/LoanDetail";
@@ -53,6 +54,16 @@ const App = () => (
                 <ProtectedRoute>
                   <Layout>
                     <NewBorrower />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/borrowers/:id"
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <BorrowerDetail />
                   </Layout>
                 </ProtectedRoute>
               }
