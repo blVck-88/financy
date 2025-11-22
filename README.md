@@ -172,11 +172,6 @@ A user cannot create borrowers/loans/repayments until assigned a role.
 
 ## Deployment
 
-### Lovable
-
-* Open the project
-* Share → Publish
-
 ### Vercel / Netlify
 
 1. Push code to GitHub/GitLab
