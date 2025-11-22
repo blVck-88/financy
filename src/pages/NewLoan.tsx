@@ -50,7 +50,7 @@ const NewLoan = () => {
       const r = parseFloat(interest_rate) / 100;
       const t = parseInt(term_months);
       
-      const totalInterest = p * r * (t / 12);
+      const totalInterest = p * r * t;
       const totalPayable = p + totalInterest;
       
       let numInstalments = t;
